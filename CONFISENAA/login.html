@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Iniciar Sesión - CONFISENA</title>
+
+    <link rel="stylesheet" href="login_diseño.css">
+</head>
+
+<body>
+
+    <main>
+
+        <div class="contenedor__todo">
+
+            <!-- BOTONES PARA CAMBIAR ENTRE LOGIN Y REGISTRO -->
+            <input type="radio" name="toggle_form" id="show-login" checked hidden>
+            <input type="radio" name="toggle_form" id="show-register" hidden>
+
+
+            <!-- CAJA TRASERA -->
+            <div class="caja__trasera">
+
+                <!-- PARTE LOGIN -->
+                <div class="caja__trasera-login">
+
+                    <h3>¿Ya tienes cuenta?</h3>
+
+                    <p>
+                        Inicia sesión para entrar a nuestra plataforma
+                    </p>
+
+                    <label for="show-login" class="btn_disfrazado">
+                        Iniciar Sesión
+                    </label>
+
+                    <label class="btn_disfrazado">
+                        <a href="registrot.html">
+                            ¿Eres Una Tienda?
+                        </a>
+                    </label>
+
+                </div>
+
+
+                <!-- PARTE REGISTRO -->
+                <div class="caja__trasera-register">
+
+                    <h3>¿Aún no tienes una cuenta?</h3>
+
+                    <p>
+                        Regístrate para entrar a nuestra plataforma
+                    </p>
+
+                    <label for="show-register" class="btn_disfrazado">
+                        Registrarse
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTENEDOR DE FORMULARIOS -->
+            <div class="contenedor__login-register">
+
+
+                <!-- ========================= -->
+                <!-- FORMULARIO INICIAR SESIÓN -->
+                <!-- ========================= -->
+
+                <form class="formulario__login" id="formLogin">
+
+                    <h2>Iniciar Sesión</h2>
+
+                    <input
+                        type="email"
+                        id="correo"
+                        placeholder="Correo Electrónico"
+                        required
+                    >
+
+                    <input
+                        type="password"
+                        id="contrasena"
+                        placeholder="Contraseña"
+                        required
+                    >
+
+                    <button type="submit">
+                        Entrar
+                    </button>
+
+                    <div class="enlace_olvido">
+
+                        <a href="restablecer.html">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+
+                    </div>
+
+                </form>
+
+
+                <!-- ================= -->
+                <!-- FORMULARIO REGISTRO -->
+                <!-- ================= -->
+
+                <form
+                    class="formulario__register"
+                    onsubmit="event.preventDefault();"
+                >
+
+                    <h2>Registrarse</h2>
+
+                    <input
+                        type="text"
+                        placeholder="Nombre"
+                        required
+                    >
+
+                    <input
+                        type="number"
+                        placeholder="Número de Documento"
+                        required
+                    >
+
+                    <input
+                        type="number"
+                        placeholder="Número de Teléfono"
+                        required
+                    >
+
+                    <input
+                        type="email"
+                        placeholder="Correo Electrónico"
+                        required
+                    >
+
+                    <input
+                        type="password"
+                        placeholder="Contraseña"
+                        required
+                    >
+
+                    <input
+                        type="password"
+                        placeholder="Confirmar Contraseña"
+                        required
+                    >
+
+                    <button type="submit">
+                        Registrarse
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ========================= -->
+    <!-- JAVASCRIPT DEL LOGIN -->
+    <!-- ========================= -->
+
+    <script>
+
+        const formularioLogin = document.getElementById("formLogin");
+
+        formularioLogin.addEventListener("submit", function(evento) {
+
+            evento.preventDefault();
+
+
+            // Obtener datos ingresados
+            const correo = document.getElementById("correo").value.trim();
+            const contrasena = document.getElementById("contrasena").value;
+
+
+            // =====================================================
+            // GERENTE GENERAL
+            // =====================================================
+
+            if (
+                correo === "gerenteconfisena@gmail.com" &&
+                contrasena === "12345678"
+            ) {
+
+                localStorage.setItem("sesionActiva", "true");
+                localStorage.setItem("rolUsuario", "Gerente General");
+
+                window.location.href = "gerente.html";
+
+                return;
+            }
+
+
+            // =====================================================
+            // GESTOR
+            // =====================================================
+
+            if (
+                correo === "gestorconfisena@gmail.com" &&
+                contrasena === "12345678"
+            ) {
+
+                localStorage.setItem("sesionActiva", "true");
+                localStorage.setItem("rolUsuario", "Gestor");
+
+                window.location.href = "gestor.html";
+
+                return;
+            }
+
+
+            // =====================================================
+            // VENDEDORES REGISTRADOS POR EL GESTOR
+            // =====================================================
+
+            const vendedores =
+                JSON.parse(localStorage.getItem("vendedores")) || [];
+
+
+            // Buscar vendedor por correo y contraseña
+            const vendedor = vendedores.find(function(v) {
+
+                return (
+                    v.correo === correo &&
+                    v.contrasena === contrasena
+                );
+
+            });
+
+
+            // =====================================================
+            // SI EL VENDEDOR EXISTE
+            // =====================================================
+
+            if (vendedor) {
+
+
+                // ==========================================
+                // VENDEDOR INACTIVO
+                // ==========================================
+
+                if (vendedor.estado === "Inactivo") {
+
+                    alert(
+                        "Tu cuenta de vendedor está inactiva.\n\n" +
+                        "No puedes iniciar sesión. " +
+                        "Comunícate con el Gestor para obtener más información."
+                    );
+
+                    return;
+                }
+
+
+                // ==========================================
+                // VENDEDOR ACTIVO
+                // ==========================================
+
+                if (vendedor.estado === "Activo") {
+
+                    localStorage.setItem(
+                        "sesionActiva",
+                        "true"
+                    );
+
+                    localStorage.setItem(
+                        "rolUsuario",
+                        "Vendedor"
+                    );
+
+                    localStorage.setItem(
+                        "usuarioVendedor",
+                        vendedor.usuario
+                    );
+
+                    localStorage.setItem(
+                        "tiendaVendedor",
+                        vendedor.tienda
+                    );
+
+                    localStorage.setItem(
+                        "idVendedor",
+                        vendedor.id
+                    );
+
+
+                    window.location.href = "tienda.html";
+
+                    return;
+                }
+
+
+                // ==========================================
+                // CUALQUIER OTRO ESTADO
+                // ==========================================
+
+                alert(
+                    "No puedes iniciar sesión porque tu cuenta " +
+                    "no se encuentra activa."
+                );
+
+                return;
+            }
+
+            alert(
+                "Correo o contraseña incorrectos."
+            );
+
+        });
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Panel del Vendedor - CONFISENA</title>
+
+    <link rel="stylesheet" href="tienda.css">
+</head>
+
+<body>
+
+    <!-- ========================= -->
+    <!-- ENCABEZADO -->
+    <!-- ========================= -->
+
+    <header class="encabezado">
+
+        <div class="logo">
+            CONFISENA
+        </div>
+
+        <div class="informacion-vendedor">
+
+            <span>Vendedor</span>
+
+            <strong id="nombreVendedor">
+                Vendedor
+            </strong>
+
+        </div>
+
+        <button id="cerrarSesion" class="boton-cerrar">
+            Cerrar sesión
+        </button>
+
+    </header>
+
+
+    <!-- ========================= -->
+    <!-- CONTENIDO PRINCIPAL -->
+    <!-- ========================= -->
+
+    <main class="contenedor">
+
+        <!-- PRESENTACIÓN -->
+
+        <section class="bienvenida">
+
+            <div>
+
+                <p class="texto-pequeno">
+                    Panel de administración
+                </p>
+
+                <h1>
+                    Bienvenido a CONFISENA
+                </h1>
+
+                <p id="nombreTiendaTexto">
+                    Gestiona la información de tu tienda
+                    desde este panel.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- INFORMACIÓN DE LA TIENDA -->
+        <!-- ========================= -->
+
+        <section class="informacion-tienda">
+
+            <div class="titulo-seccion">
+
+                <h2>
+                    Mi tienda
+                </h2>
+
+            </div>
+
+
+            <div class="datos-tienda">
+
+                <div class="dato">
+
+                    <span>
+                        Tienda
+                    </span>
+
+                    <strong id="nombreTienda">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="dato">
+
+                    <span>
+                        Teléfono
+                    </span>
+
+                    <strong id="telefonoTienda">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="dato">
+
+                    <span>
+                        Dirección
+                    </span>
+
+                    <strong id="direccionTienda">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="dato">
+
+                    <span>
+                        Localidad
+                    </span>
+
+                    <strong id="localidadTienda">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- OPCIONES DEL VENDEDOR -->
+        <!-- ========================= -->
+
+        <section class="seccion-opciones">
+
+            <div class="titulo-seccion">
+
+                <h2>
+                    Opciones
+                </h2>
+
+                <p>
+                    Administra los productos y pedidos
+                    de tu tienda.
+                </p>
+
+            </div>
+
+
+            <div class="grid-opciones">
+
+
+                <!-- PRODUCTOS -->
+
+                <div
+                    class="tarjeta-opcion"
+                    id="productos"
+                >
+
+                    <div class="icono">
+                        📦
+                    </div>
+
+                    <h3>
+                        Productos
+                    </h3>
+
+                    <p>
+                        Consulta y administra los productos
+                        disponibles en tu tienda.
+                    </p>
+
+                    <button>
+                        Administrar productos
+                    </button>
+
+                </div>
+
+
+                <!-- INVENTARIO -->
+
+                <div
+                    class="tarjeta-opcion"
+                    id="inventario"
+                >
+
+                    <div class="icono">
+                        🗃️
+                    </div>
+
+                    <h3>
+                        Inventario
+                    </h3>
+
+                    <p>
+                        Consulta y actualiza la información
+                        del inventario de la tienda.
+                    </p>
+
+                    <button>
+                        Ver inventario
+                    </button>
+
+                </div>
+
+
+                <!-- PEDIDOS -->
+
+                <div
+                    class="tarjeta-opcion"
+                    id="pedidos"
+                >
+
+                    <div class="icono">
+                        🛒
+                    </div>
+
+                    <h3>
+                        Pedidos
+                    </h3>
+
+                    <p>
+                        Consulta y gestiona los pedidos
+                        realizados por los usuarios.
+                    </p>
+
+                    <button>
+                        Ver pedidos
+                    </button>
+
+                </div>
+
+
+                <!-- APARTADOS -->
+
+                <div
+                    class="tarjeta-opcion"
+                    id="apartados"
+                >
+
+                    <div class="icono">
+                        📋
+                    </div>
+
+                    <h3>
+                        Apartados
+                    </h3>
+
+                    <p>
+                        Consulta los productos apartados
+                        y su estado.
+                    </p>
+
+                    <button>
+                        Ver apartados
+                    </button>
+
+                </div>
+
+
+                <!-- INFORMACIÓN TIENDA -->
+
+                <div
+                    class="tarjeta-opcion"
+                    id="informacion"
+                >
+
+                    <div class="icono">
+                        🏪
+                    </div>
+
+                    <h3>
+                        Información de la tienda
+                    </h3>
+
+                    <p>
+                        Consulta la información registrada
+                        de tu tienda.
+                    </p>
+
+                    <button>
+                        Ver información
+                    </button>
+
+                </div>
+
+
+                <!-- REPORTAR PROBLEMA -->
+
+                <div
+                    class="tarjeta-opcion"
+                    id="reportarProblema"
+                >
+
+                    <div class="icono">
+                        ⚠️
+                    </div>
+
+                    <h3>
+                        Reportar problema
+                    </h3>
+
+                    <p>
+                        Informa al Gestor sobre problemas
+                        relacionados con la plataforma.
+                    </p>
+
+                    <button>
+                        Reportar problema
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- RESUMEN -->
+        <!-- ========================= -->
+
+        <section class="resumen">
+
+            <div class="tarjeta-resumen">
+
+                <span>
+                    Productos
+                </span>
+
+                <strong id="cantidadProductos">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span>
+                    Pedidos pendientes
+                </span>
+
+                <strong id="cantidadPedidos">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span>
+                    Apartados pendientes
+                </span>
+
+                <strong id="cantidadApartados">
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="tienda.js"></script>
+
+</body>
+
+</html>
