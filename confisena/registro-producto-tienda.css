@@ -1,0 +1,335 @@
+:root {
+    --azul-oscuro: #172554;
+    --azul: #2563eb;
+    --azul-claro: #dbeafe;
+
+    --blanco: #ffffff;
+
+    --gris-claro: #f1f5f9;
+    --gris: #64748b;
+    --gris-oscuro: #334155;
+
+    --borde: #e2e8f0;
+
+    --rojo: #dc2626;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: var(--gris-claro);
+
+    color: var(--gris-oscuro);
+}
+
+
+.encabezado {
+    width: 100%;
+    min-height: 75px;
+
+    background: var(--blanco);
+
+    border-bottom: 1px solid var(--borde);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 40px;
+}
+
+.logo {
+    font-size: 25px;
+
+    font-weight: bold;
+
+    color: var(--azul-oscuro);
+}
+
+.informacion-vendedor {
+    display: flex;
+
+    flex-direction: column;
+
+    text-align: center;
+}
+
+.informacion-vendedor span {
+    font-size: 12px;
+
+    color: var(--gris);
+}
+
+.informacion-vendedor strong {
+    color: var(--azul-oscuro);
+
+    font-size: 15px;
+}
+
+.boton-cerrar {
+    border: none;
+
+    background: var(--gris-claro);
+
+    color: var(--gris-oscuro);
+
+    padding: 10px 16px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.boton-cerrar:hover {
+    background: #e2e8f0;
+
+    color: var(--rojo);
+}
+
+.contenedor {
+    width: 92%;
+
+    max-width: 1100px;
+
+    margin: 35px auto;
+}
+
+
+.cabecera-pagina {
+    background: var(--blanco);
+
+    border: 1px solid var(--borde);
+
+    border-radius: 14px;
+
+    padding: 30px;
+
+    margin-bottom: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.texto-pequeno {
+    color: var(--azul);
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+}
+
+.cabecera-pagina h1 {
+    color: var(--azul-oscuro);
+
+    font-size: 30px;
+
+    margin-bottom: 8px;
+}
+
+.cabecera-pagina p:last-child {
+    color: var(--gris);
+
+    font-size: 15px;
+}
+
+
+.boton-principal {
+    border: none;
+
+    background: var(--azul);
+
+    color: var(--blanco);
+
+    padding: 12px 20px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.boton-principal:hover {
+    background: var(--azul-oscuro);
+}
+
+.boton-secundario {
+    border: 1px solid var(--borde);
+
+    background: var(--blanco);
+
+    color: var(--gris-oscuro);
+
+    padding: 11px 18px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.boton-secundario:hover {
+    background: var(--gris-claro);
+}
+
+
+.panel-formulario {
+    background: var(--blanco);
+
+    border: 1px solid var(--borde);
+
+    border-radius: 14px;
+
+    padding: 30px;
+}
+
+.titulo-formulario {
+    margin-bottom: 25px;
+}
+
+.titulo-formulario h2 {
+    color: var(--azul-oscuro);
+
+    font-size: 21px;
+
+    margin-bottom: 5px;
+}
+
+.titulo-formulario p {
+    color: var(--gris);
+
+    font-size: 14px;
+}
+
+
+.grid-formulario {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+
+.campo {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.campo label {
+    color: var(--gris-oscuro);
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+
+    border: 1px solid var(--borde);
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+    outline: none;
+
+    background: var(--blanco);
+
+    color: var(--gris-oscuro);
+
+    font-size: 14px;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    border-color: var(--azul);
+}
+
+.campo textarea {
+    resize: vertical;
+
+    min-height: 120px;
+}
+
+
+.campo-descripcion {
+    margin-top: 20px;
+}
+
+
+.acciones-formulario {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 30px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid var(--borde);
+}
+
+
+@media (max-width: 700px) {
+
+    .encabezado {
+        padding: 15px 20px;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .informacion-vendedor {
+        order: 3;
+    }
+
+    .cabecera-pagina {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .grid-formulario {
+        grid-template-columns: 1fr;
+    }
+
+    .acciones-formulario {
+        flex-direction: column-reverse;
+    }
+
+    .acciones-formulario button {
+        width: 100%;
+    }
+
+}

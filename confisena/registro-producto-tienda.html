@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registrar producto - CONFISENA</title>
+
+    <link rel="stylesheet" href="registro-producto-tienda.css">
+</head>
+
+<body>
+
+
+    <header class="encabezado">
+
+        <div class="logo">
+            CONFISENA
+        </div>
+
+        <div class="informacion-vendedor">
+
+            <span>Vendedor</span>
+
+            <strong id="nombreVendedor">
+                Vendedor
+            </strong>
+
+        </div>
+
+        <button id="cerrarSesion" class="boton-cerrar">
+            Cerrar sesión
+        </button>
+
+    </header>
+
+
+
+    <main class="contenedor">
+
+        <section class="cabecera-pagina">
+
+            <div>
+
+                <p class="texto-pequeno">
+                    Administración del catálogo
+                </p>
+
+                <h1>
+                    Registrar producto
+                </h1>
+
+                <p>
+                    Registra un nuevo producto para el catálogo de tu tienda.
+                </p>
+
+            </div>
+
+            <button id="volverProductos" class="boton-secundario">
+                ← Volver a productos
+            </button>
+
+        </section>
+
+        <section class="panel-formulario">
+
+            <form id="formularioProducto">
+
+
+                <div class="titulo-formulario">
+
+                    <h2>
+                        Información del producto
+                    </h2>
+
+                    <p>
+                        Completa los datos principales del producto.
+                    </p>
+
+                </div>
+
+
+                <div class="grid-formulario">
+
+                    <div class="campo">
+
+                        <label for="nombreProducto">
+                            Nombre del producto
+                        </label>
+
+                        <input type="text" id="nombreProducto" placeholder="Ej. Camisa de uniforme SENA" maxlength="100"
+                            required>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="codigoProducto">
+                            Código del producto
+                        </label>
+
+                        <input type="text" id="codigoProducto" placeholder="Ej. CF-CAM-001" maxlength="30" required>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="categoriaProducto">
+                            Categoría
+                        </label>
+
+                        <select id="categoriaProducto" required>
+
+                            <option value="">
+                                Selecciona una categoría
+                            </option>
+
+                            <option value="Uniforme">
+                                Uniforme
+                            </option>
+
+                            <option value="Calzado">
+                                Calzado
+                            </option>
+
+                            <option value="Accesorios">
+                                Accesorios
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="precioProducto">
+                            Precio
+                        </label>
+
+                        <input type="number" id="precioProducto" placeholder="Ej. 60000" min="0" step="100" required>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="proveedorProducto">
+                            Proveedor
+                        </label>
+
+                        <input type="text" id="proveedorProducto" placeholder="Nombre del proveedor" maxlength="100"
+                            required>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="tallasProducto">
+                            Tallas
+                        </label>
+
+                        <input type="text" id="tallasProducto" placeholder="Ej. S, M, L, XL" maxlength="100" required>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="estadoProducto">
+                            Estado
+                        </label>
+
+                        <select id="estadoProducto" required>
+
+                            <option value="Disponible">
+                                Disponible
+                            </option>
+
+                            <option value="Agotado">
+                                Agotado
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="campo campo-descripcion">
+
+                    <label for="descripcionProducto">
+                        Descripción
+                    </label>
+
+                    <textarea id="descripcionProducto" rows="5" maxlength="500"
+                        placeholder="Escribe una descripción del producto..."></textarea>
+
+                </div>
+
+
+
+                <div class="acciones-formulario">
+
+                    <button type="button" id="cancelar" class="boton-secundario">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="boton-principal">
+                        Registrar producto
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <script src="registro-producto-tienda.js"></script>
+
+</body>
+
+</html>

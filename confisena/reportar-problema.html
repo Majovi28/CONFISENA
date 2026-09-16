@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportar Problema - CONFISENA</title>
+    <link rel="stylesheet" href="reportar-problemas.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+        <div class="logo">CONFISENA</div>
+
+        <div class="usuario-header">
+            <span id="nombreVendedor">Vendedor</span>
+            <button id="cerrarSesion">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <main class="contenedor">
+
+        <div class="cabecera-pagina">
+            <div>
+                <h1>Reportar problema</h1>
+                <p>Informa cualquier inconveniente relacionado con la tienda o la plataforma.</p>
+            </div>
+
+            <button id="volverTienda" class="boton-secundario">
+                ← Volver a la tienda
+            </button>
+        </div>
+
+        <section class="tarjeta">
+
+            <h2>Nuevo reporte</h2>
+            <p class="texto-ayuda">
+                Completa la información para enviar el reporte al Gestor.
+            </p>
+
+            <form id="formularioReporte">
+
+                <div class="campo">
+                    <label for="tipoProblema">Tipo de problema</label>
+
+                    <select id="tipoProblema" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Inventario">Problema con inventario</option>
+                        <option value="Producto">Problema con producto</option>
+                        <option value="Pedido">Problema con pedido</option>
+                        <option value="Apartado">Problema con apartado</option>
+                        <option value="Tienda">Problema con información de la tienda</option>
+                        <option value="Plataforma">Problema con la plataforma</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="asunto">Asunto</label>
+
+                    <input type="text" id="asunto" placeholder="Ejemplo: No puedo actualizar el inventario"
+                        maxlength="100" required>
+                </div>
+
+                <div class="campo">
+                    <label for="descripcion">Descripción del problema</label>
+
+                    <textarea id="descripcion" rows="6" maxlength="500"
+                        placeholder="Describe detalladamente el problema..." required></textarea>
+
+                    <small>Máximo 500 caracteres.</small>
+                </div>
+
+                <div class="campo">
+                    <label for="prioridad">Prioridad</label>
+
+                    <select id="prioridad" required>
+                        <option value="">Selecciona una prioridad</option>
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+                </div>
+
+                <div class="informacion-reporte">
+
+                    <div>
+                        <span>Vendedor</span>
+                        <strong id="vendedorReporte">-</strong>
+                    </div>
+
+                    <div>
+                        <span>Tienda</span>
+                        <strong id="tiendaReporte">-</strong>
+                    </div>
+
+                    <div>
+                        <span>Estado inicial</span>
+                        <strong class="estado">Pendiente</strong>
+                    </div>
+
+                </div>
+
+                <div class="acciones">
+
+                    <button type="button" id="cancelar" class="boton-cancelar">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="boton-enviar">
+                        Enviar reporte
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <script src="reportar-problemas.js"></script>
+
+</body>
+
+</html>

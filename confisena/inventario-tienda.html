@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario - CONFISENA</title>
+    <link rel="stylesheet" href="inventario-tienda.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+        <div class="logo">
+            <h1>CONFISENA</h1>
+            <span>Transformamos la forma de comprar</span>
+        </div>
+
+        <div class="usuario-header">
+            <span id="nombreVendedor">Vendedor</span>
+            <button id="cerrarSesion">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="encabezado-pagina">
+            <div>
+                <h2>Inventario</h2>
+                <p id="nombreTiendaTexto">
+                    Controla las cantidades, entradas y salidas de los productos.
+                </p>
+            </div>
+
+            <button class="boton-volver" id="volverTienda">
+                ← Volver a la tienda
+            </button>
+        </section>
+
+        <section class="resumen">
+
+            <div class="tarjeta-resumen">
+                <span class="icono">📦</span>
+                <div>
+                    <p>Productos</p>
+                    <strong id="cantidadProductos">0</strong>
+                </div>
+            </div>
+
+            <div class="tarjeta-resumen">
+                <span class="icono">🔢</span>
+                <div>
+                    <p>Unidades disponibles</p>
+                    <strong id="cantidadUnidades">0</strong>
+                </div>
+            </div>
+
+            <div class="tarjeta-resumen">
+                <span class="icono">📥</span>
+                <div>
+                    <p>Total entradas</p>
+                    <strong id="cantidadEntradas">0</strong>
+                </div>
+            </div>
+
+            <div class="tarjeta-resumen">
+                <span class="icono">📤</span>
+                <div>
+                    <p>Total salidas</p>
+                    <strong id="cantidadSalidas">0</strong>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="panel-inventario">
+
+            <div class="controles">
+
+                <div class="buscador">
+                    <input type="text" id="buscarProducto" placeholder="Buscar producto o código...">
+                </div>
+
+                <select id="filtroInventario">
+                    <option value="Todos">Todos</option>
+                    <option value="Disponible">Con unidades</option>
+                    <option value="Agotado">Agotados</option>
+                </select>
+
+            </div>
+
+            <div class="tabla-contenedor">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Código</th>
+                            <th>Proveedor</th>
+                            <th>Precio</th>
+                            <th>Disponibles</th>
+                            <th>Entradas</th>
+                            <th>Salidas</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaInventario"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL -->
+    <div class="modal" id="modalInventario">
+
+        <div class="modal-contenido">
+
+            <button class="cerrar-modal" id="cerrarModal">×</button>
+
+            <h2 id="modalTitulo">Gestionar inventario</h2>
+
+            <div class="informacion-producto">
+
+                <p>
+                    <strong>Producto:</strong>
+                    <span id="modalNombre">-</span>
+                </p>
+
+                <p>
+                    <strong>Código:</strong>
+                    <span id="modalCodigo">-</span>
+                </p>
+
+                <p>
+                    <strong>Proveedor:</strong>
+                    <span id="modalProveedor">-</span>
+                </p>
+
+                <p>
+                    <strong>Unidades disponibles:</strong>
+                    <span id="modalCantidad">0</span>
+                </p>
+
+            </div>
+
+            <div class="separador"></div>
+
+            <h3>Registrar movimiento</h3>
+
+            <div class="botones-movimiento">
+
+                <button class="boton entrada" id="botonEntrada">
+                     Registrar entrada
+                </button>
+
+                <button class="boton salida" id="botonSalida">
+                     Registrar salida
+                </button>
+
+            </div>
+
+            <div class="formulario-movimiento" id="formularioMovimiento">
+
+                <label for="cantidadMovimiento">
+                    Cantidad
+                </label>
+
+                <input type="number" id="cantidadMovimiento" min="1" placeholder="Ejemplo: 10">
+
+                <div class="acciones-formulario">
+
+                    <button id="cancelarMovimiento">
+                        Cancelar
+                    </button>
+
+                    <button id="guardarMovimiento">
+                        Guardar movimiento
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="inventario-tienda.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Productos - CONFISENA</title>
+
+    <link rel="stylesheet" href="productos-tienda.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+
+        <div class="logo">
+            CONFISENA
+        </div>
+
+        <div class="informacion-vendedor">
+
+            <span>Vendedor</span>
+
+            <strong id="nombreVendedor">
+                Vendedor
+            </strong>
+
+        </div>
+
+        <button id="cerrarSesion" class="boton-cerrar">
+            Cerrar sesión
+        </button>
+
+    </header>
+
+
+    <main class="contenedor">
+
+        <section class="cabecera-pagina">
+
+            <div>
+
+                <p class="texto-pequeno">
+                    Administración del catálogo
+                </p>
+
+                <h1>
+                    Productos
+                </h1>
+
+                <p id="nombreTiendaTexto">
+                    Administra los productos que ofrece tu tienda.
+                </p>
+
+            </div>
+
+            <button id="volverTienda" class="boton-secundario">
+                ← Volver a mi tienda
+            </button>
+
+        </section>
+
+
+        <section class="resumen">
+
+            <div class="tarjeta-resumen">
+
+                <span>
+                    Total de productos
+                </span>
+
+                <strong id="cantidadProductos">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span>
+                    Disponibles
+                </span>
+
+                <strong id="cantidadDisponibles">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span>
+                    Agotados
+                </span>
+
+                <strong id="cantidadAgotados">
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <section class="panel-productos">
+
+            <div class="titulo-seccion">
+
+                <div>
+
+                    <h2>
+                        Catálogo de productos
+                    </h2>
+
+                    <p>
+                        Consulta y administra los productos de tu tienda.
+                    </p>
+
+                </div>
+
+                <button id="agregarProducto" class="boton-principal">
+                    + Agregar producto
+                </button>
+
+            </div>
+
+
+            <div class="filtros">
+
+                <div class="campo-busqueda">
+
+                    <label for="buscarProducto">
+                        Buscar producto
+                    </label>
+
+                    <input type="text" id="buscarProducto" placeholder="Nombre o código del producto...">
+
+                </div>
+
+
+                <div class="campo-filtro">
+
+                    <label for="filtroCategoria">
+                        Categoría
+                    </label>
+
+                    <select id="filtroCategoria">
+
+                        <option value="Todas">
+                            Todas
+                        </option>
+
+                        <option value="Uniforme">
+                            Camisas
+                        </option>
+
+                        <option value="Calzado">
+                            Conjuntos
+                        </option>
+
+                        <option value="Accesorios">
+                            Pantalones
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo-filtro">
+
+                    <label for="filtroEstado">
+                        Estado
+                    </label>
+
+                    <select id="filtroEstado">
+
+                        <option value="Todos">
+                            Todos
+                        </option>
+
+                        <option value="Disponible">
+                            Disponible
+                        </option>
+
+                        <option value="Agotado">
+                            Agotado
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="tabla-contenedor">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Producto
+                            </th>
+
+                            <th>
+                                Código
+                            </th>
+
+                            <th>
+                                Categoría
+                            </th>
+
+                            <th>
+                                Precio
+                            </th>
+
+                            <th>
+                                Tallas
+                            </th>
+
+                            <th>
+                                Estado
+                            </th>
+
+                            <th>
+                                Acciones
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tablaProductos">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <div id="modalProducto" class="modal">
+
+        <div class="contenido-modal">
+
+            <div class="cabecera-modal">
+
+                <h2>
+                    Detalles del producto
+                </h2>
+
+                <button id="cerrarModal" class="cerrar-modal">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="informacion-producto">
+
+                <div class="dato-modal">
+
+                    <span>
+                        Producto
+                    </span>
+
+                    <strong id="modalNombre">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="dato-modal">
+
+                    <span>
+                        Código
+                    </span>
+
+                    <strong id="modalCodigo">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="dato-modal">
+
+                    <span>
+                        Categoría
+                    </span>
+
+                    <strong id="modalCategoria">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="dato-modal">
+
+                    <span>
+                        Precio
+                    </span>
+
+                    <strong id="modalPrecio">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="dato-modal">
+
+                    <span>
+                        Tallas
+                    </span>
+
+                    <strong id="modalTallas">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="dato-modal">
+
+                    <span>
+                        Estado
+                    </span>
+
+                    <strong id="modalEstado">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="acciones-modal">
+
+                <button id="cambiarEstado" class="boton-principal">
+                    Cambiar disponibilidad
+                </button>
+
+                <button id="cerrarModalBoton" class="boton-secundario">
+                    Cerrar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="productos-tienda.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - CONFISENA</title>
+    <link rel="stylesheet" href="pedidos-tienda.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+
+        <div class="logo">
+            <h1>CONFISENA</h1>
+            <span>Transformamos la forma de comprar</span>
+        </div>
+
+        <div class="usuario-header">
+            <span id="nombreVendedor">Vendedor</span>
+            <button id="cerrarSesion">Cerrar sesión</button>
+        </div>
+
+    </header>
+
+
+    <main class="contenedor">
+
+
+        <section class="encabezado-pagina">
+
+            <div>
+                <h2>Pedidos</h2>
+
+                <p id="nombreTiendaTexto">
+                    Consulta y administra los pedidos de tu tienda.
+                </p>
+            </div>
+
+            <button class="boton-volver" id="volverTienda">
+                ← Volver a la tienda
+            </button>
+
+        </section>
+
+
+
+        <section class="resumen">
+
+            <div class="tarjeta-resumen">
+
+                <span class="icono">📦</span>
+
+                <div>
+                    <p>Total pedidos</p>
+                    <strong id="totalPedidos">0</strong>
+                </div>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span class="icono">⏳</span>
+
+                <div>
+                    <p>Pendientes</p>
+                    <strong id="pedidosPendientes">0</strong>
+                </div>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span class="icono">🔄</span>
+
+                <div>
+                    <p>En preparación</p>
+                    <strong id="pedidosPreparando">0</strong>
+                </div>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span class="icono">✅</span>
+
+                <div>
+                    <p>Entregados</p>
+                    <strong id="pedidosEntregados">0</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="panel-pedidos">
+
+            <div class="controles">
+
+                <div class="buscador">
+
+                    <input type="text" id="buscarPedido" placeholder="Buscar por pedido, cliente o producto...">
+
+                </div>
+
+
+                <select id="filtroEstado">
+
+                    <option value="Todos">
+                        Todos los estados
+                    </option>
+
+                    <option value="Pendiente">
+                        Pendiente
+                    </option>
+
+                    <option value="Preparando">
+                        Preparando
+                    </option>
+
+                    <option value="Listo para entregar">
+                        Listo para entregar
+                    </option>
+
+                    <option value="Entregado">
+                        Entregado
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="tabla-contenedor">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Pedido</th>
+                            <th>Cliente</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Total</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaPedidos"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div class="modal" id="modalPedido">
+
+        <div class="modal-contenido">
+
+            <button class="cerrar-modal" id="cerrarModal">
+                ×
+            </button>
+
+
+            <h2>Información del pedido</h2>
+
+
+            <div class="detalle-pedido">
+
+                <div class="detalle">
+
+                    <span>Número de pedido</span>
+                    <strong id="modalPedidoId">-</strong>
+
+                </div>
+
+
+                <div class="detalle">
+
+                    <span>Cliente</span>
+                    <strong id="modalCliente">-</strong>
+
+                </div>
+
+
+                <div class="detalle">
+
+                    <span>Correo</span>
+                    <strong id="modalCorreo">-</strong>
+
+                </div>
+
+
+                <div class="detalle">
+
+                    <span>Teléfono</span>
+                    <strong id="modalTelefono">-</strong>
+
+                </div>
+
+
+                <div class="detalle">
+
+                    <span>Producto</span>
+                    <strong id="modalProducto">-</strong>
+
+                </div>
+
+
+                <div class="detalle">
+
+                    <span>Talla</span>
+                    <strong id="modalTalla">-</strong>
+
+                </div>
+
+
+                <div class="detalle">
+
+                    <span>Cantidad</span>
+                    <strong id="modalCantidad">-</strong>
+
+                </div>
+
+
+                <div class="detalle">
+
+                    <span>Precio unitario</span>
+                    <strong id="modalPrecio">-</strong>
+
+                </div>
+
+
+                <div class="detalle">
+
+                    <span>Total</span>
+                    <strong id="modalTotal">-</strong>
+
+                </div>
+
+
+                <div class="detalle">
+
+                    <span>Fecha</span>
+                    <strong id="modalFecha">-</strong>
+
+                </div>
+
+
+                <div class="detalle">
+
+                    <span>Dirección de entrega</span>
+                    <strong id="modalDireccion">-</strong>
+
+                </div>
+
+
+                <div class="detalle">
+
+                    <span>Estado actual</span>
+                    <strong id="modalEstado">-</strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="separador"></div>
+
+
+            <h3>Cambiar estado</h3>
+
+
+            <select id="nuevoEstado">
+
+                <option value="Pendiente">
+                    Pendiente
+                </option>
+
+                <option value="Preparando">
+                    Preparando
+                </option>
+
+                <option value="Listo para entregar">
+                    Listo para entregar
+                </option>
+
+                <option value="Entregado">
+                    Entregado
+                </option>
+
+            </select>
+
+
+            <button class="boton-guardar" id="guardarEstado">
+                Guardar estado
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="pedidos-tienda.js"></script>
+
+</body>
+
+</html>

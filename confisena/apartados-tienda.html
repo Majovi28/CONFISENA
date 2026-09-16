@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartados - CONFISENA</title>
+    <link rel="stylesheet" href="apartados-tienda.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+
+        <div class="logo">
+            <h1>CONFISENA</h1>
+            <span>Transformamos la forma de comprar</span>
+        </div>
+
+        <div class="usuario-header">
+            <span id="nombreVendedor">Vendedor</span>
+            <button id="cerrarSesion">Cerrar sesión</button>
+        </div>
+
+    </header>
+
+
+    <main class="contenedor">
+
+        <section class="encabezado-pagina">
+
+            <div>
+                <h2>Apartados</h2>
+
+                <p id="nombreTiendaTexto">
+                    Consulta y administra los apartados de tu tienda.
+                </p>
+            </div>
+
+            <button class="boton-volver" id="volverTienda">
+                ← Volver a la tienda
+            </button>
+
+        </section>
+
+
+        <!-- RESUMEN -->
+
+        <section class="resumen">
+
+            <div class="tarjeta-resumen">
+
+                <span class="icono">📋</span>
+
+                <div>
+                    <p>Total apartados</p>
+                    <strong id="totalApartados">0</strong>
+                </div>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span class="icono">⏳</span>
+
+                <div>
+                    <p>Pendientes</p>
+                    <strong id="apartadosPendientes">0</strong>
+                </div>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span class="icono">💰</span>
+
+                <div>
+                    <p>Abonos recibidos</p>
+                    <strong id="totalAbonos">$0</strong>
+                </div>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span class="icono">💵</span>
+
+                <div>
+                    <p>Saldos pendientes</p>
+                    <strong id="totalSaldos">$0</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PANEL -->
+
+        <section class="panel-apartados">
+
+            <div class="controles">
+
+                <div class="buscador">
+
+                    <input type="text" id="buscarApartado" placeholder="Buscar por cliente, producto o apartado...">
+
+                </div>
+
+
+                <select id="filtroEstado">
+
+                    <option value="Todos">
+                        Todos los estados
+                    </option>
+
+                    <option value="Pendiente">
+                        Pendiente
+                    </option>
+
+                    <option value="Preparando">
+                        Preparando
+                    </option>
+
+                    <option value="Listo para entregar">
+                        Listo para entregar
+                    </option>
+
+                    <option value="Entregado">
+                        Entregado
+                    </option>
+
+                    <option value="Cancelado">
+                        Cancelado
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- TABLA -->
+
+            <div class="tabla-contenedor">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Apartado</th>
+                            <th>Cliente</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Total</th>
+                            <th>Abono</th>
+                            <th>Saldo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaApartados"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- MODAL -->
+
+    <div class="modal" id="modalApartado">
+
+        <div class="modal-contenido">
+
+            <button class="cerrar-modal" id="cerrarModal">
+                ×
+            </button>
+
+
+            <h2>Información del apartado</h2>
+
+
+            <div class="detalle-apartado">
+
+                <div class="detalle">
+                    <span>Número de apartado</span>
+                    <strong id="modalId">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Cliente</span>
+                    <strong id="modalCliente">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Correo</span>
+                    <strong id="modalCorreo">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Teléfono</span>
+                    <strong id="modalTelefono">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Producto</span>
+                    <strong id="modalProducto">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Talla</span>
+                    <strong id="modalTalla">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Cantidad</span>
+                    <strong id="modalCantidad">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Fecha de apartado</span>
+                    <strong id="modalFechaApartado">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Fecha de entrega</span>
+                    <strong id="modalFechaEntrega">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Fecha de salida</span>
+                    <strong id="modalFechaSalida">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Total</span>
+                    <strong id="modalTotal">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Abono 50 %</span>
+                    <strong id="modalAbono">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Saldo pendiente</span>
+                    <strong id="modalSaldo">-</strong>
+                </div>
+
+
+                <div class="detalle">
+                    <span>Método de abono</span>
+                    <strong id="modalMetodo">-</strong>
+                </div>
+
+
+                <div class="detalle detalle-completo">
+                    <span>Estado actual</span>
+                    <strong id="modalEstado">-</strong>
+                </div>
+
+            </div>
+
+
+            <div class="separador"></div>
+
+
+            <h3>Cambiar estado</h3>
+
+
+            <select id="nuevoEstado">
+
+                <option value="Pendiente">
+                    Pendiente
+                </option>
+
+                <option value="Preparando">
+                    Preparando
+                </option>
+
+                <option value="Listo para entregar">
+                    Listo para entregar
+                </option>
+
+                <option value="Entregado">
+                    Entregado
+                </option>
+
+                <option value="Cancelado">
+                    Cancelado
+                </option>
+
+            </select>
+
+
+            <button class="boton-guardar" id="guardarEstado">
+                Guardar estado
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="apartados-tienda.js"></script>
+
+</body>
+
+</html>
