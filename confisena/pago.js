@@ -1,270 +1,260 @@
-// ==========================================
-// INFORMACIÓN DEL PRODUCTO
-// ==========================================
 
-const producto = localStorage.getItem("producto") || "Camisa de uniforme SENA";
-const talla = localStorage.getItem("talla") || "M";
-const cantidad = parseInt(localStorage.getItem("cantidad")) || 1;
-const precio = parseInt(localStorage.getItem("precio")) || 60000;
-
-
-// ==========================================
-// MOSTRAR INFORMACIÓN DEL PRODUCTO
-// ==========================================
-
-document.getElementById("nombreProducto").textContent = producto;
-
-document.getElementById("tallaProducto").textContent = talla;
-
-document.getElementById("cantidadProducto").textContent = cantidad;
-
-document.getElementById("precioProducto").textContent =
-    "$" + precio.toLocaleString("es-CO");
-
-
-// ==========================================
-// CALCULAR TOTAL
-// ==========================================
-
-const total = precio * cantidad;
-
-document.getElementById("totalPago").textContent =
-    "$" + total.toLocaleString("es-CO");
-
-
-// ==========================================
-// MÉTODO DE PAGO
-// ==========================================
-
-const metodo = document.getElementById("metodo");
-
-const datosTarjeta = document.getElementById("datosTarjeta");
-
-metodo.addEventListener("change", function () {
-
-    if (this.value === "tarjeta") {
-
-        datosTarjeta.style.display = "block";
-
-    } else {
-
-        datosTarjeta.style.display = "none";
-
-    }
-
-});
-
-
-// ==========================================
-// TELÉFONO - MÁXIMO 10 DÍGITOS
-// ==========================================
-
-const telefono = document.getElementById("telefono");
-
-telefono.addEventListener("input", function () {
-
-    this.value = this.value
-        .replace(/\D/g, "")
-        .substring(0, 10);
-
-});
-
-
-// ==========================================
-// NÚMERO DE TARJETA - MÁXIMO 16 DÍGITOS
-// ==========================================
-
-const numeroTarjeta = document.getElementById("numeroTarjeta");
-
-numeroTarjeta.addEventListener("input", function () {
-
-    let valor = this.value.replace(/\D/g, "");
-
-    // Máximo 16 números
-    valor = valor.substring(0, 16);
-
-    // Separar cada 4 números
-    valor = valor.replace(/(.{4})/g, "$1 ").trim();
-
-    this.value = valor;
-
-});
-
-
-// ==========================================
-// CVV - MÁXIMO 3 DÍGITOS
-// ==========================================
-
-const cvv = document.getElementById("cvv");
-
-cvv.addEventListener("input", function () {
-
-    this.value = this.value
-        .replace(/\D/g, "")
-        .substring(0, 3);
-
-});
-
-
-// ==========================================
-// VENCIMIENTO - FORMATO MM/AA
-// ==========================================
-
-const vencimiento = document.getElementById("vencimiento");
-
-vencimiento.addEventListener("input", function () {
-
-    let valor = this.value.replace(/\D/g, "");
-
-    // Máximo 4 números
-    valor = valor.substring(0, 4);
-
-    // Agregar / después de los dos primeros números
-    if (valor.length > 2) {
-
-        valor =
-            valor.substring(0, 2) +
-            "/" +
-            valor.substring(2);
-
-    }
-
-    this.value = valor;
-
-});
-
-
-// ==========================================
-// FORMULARIO DE PAGO
-// ==========================================
-
-const formulario = document.getElementById("formularioPago");
-
-formulario.addEventListener("submit", function (evento) {
-
-    evento.preventDefault();
-
-
-    const nombre =
-        document.getElementById("nombre").value.trim();
-
-    const correo =
-        document.getElementById("correo").value.trim();
-
-    const telefonoValor =
-        document.getElementById("telefono").value.trim();
-
-    const metodoPago =
-        document.getElementById("metodo").value;
-
-
-    // ======================================
-    // VALIDAR MÉTODO DE PAGO
-    // ======================================
-
-    if (metodoPago === "") {
-
-        alert("Por favor selecciona un método de pago.");
-
+document.addEventListener("DOMContentLoaded", () => {
+    const obtener = id => document.getElementById(id);
+
+    const formulario = obtener("formularioPago");
+    const metodo = obtener("metodo");
+    const datosTarjeta = obtener("datosTarjeta");
+    const telefono = obtener("telefono");
+    const tarjeta = obtener("numeroTarjeta");
+    const cvv = obtener("cvv");
+    const vencimiento = obtener("vencimiento");
+
+    if (!formulario || !metodo || !datosTarjeta) {
+        alert("No se encontró el formulario de pago. Revisa pago.php.");
         return;
-
     }
 
+    // Crear un espacio para mostrar los mensajes del servidor.
+    const mensaje = document.createElement("p");
+    mensaje.id = "mensajePago";
+    mensaje.style.display = "none";
+    mensaje.style.margin = "12px 0";
+    mensaje.style.whiteSpace = "pre-wrap";
+    mensaje.setAttribute("role", "status");
+    mensaje.setAttribute("aria-live", "polite");
 
-    // ======================================
-    // VALIDAR TELÉFONO
-    // ======================================
+    const boton = formulario.querySelector('button[type="submit"]');
 
-    if (telefonoValor.length !== 10) {
-
-        alert("El número de teléfono debe tener exactamente 10 dígitos.");
-
-        return;
-
+    if (boton) {
+        formulario.insertBefore(mensaje, boton);
     }
 
-
-    // ======================================
-    // VALIDAR TARJETA
-    // ======================================
-
-    if (metodoPago === "tarjeta") {
-
-        const tarjeta =
-            numeroTarjeta.value.replace(/\D/g, "");
-
-        const cvvValor =
-            cvv.value.replace(/\D/g, "");
-
-        const vencimientoValor =
-            vencimiento.value;
-
-
-        if (tarjeta.length !== 16) {
-
-            alert("El número de tarjeta debe tener exactamente 16 dígitos.");
-
-            return;
-
-        }
-
-
-        if (cvvValor.length !== 3) {
-
-            alert("El CVV debe tener exactamente 3 dígitos.");
-
-            return;
-
-        }
-
-
-        if (vencimientoValor.length !== 5) {
-
-            alert("El vencimiento debe tener el formato MM/AA.");
-
-            return;
-
-        }
-
+    function mostrarMensaje(texto, error = false) {
+        mensaje.textContent = texto;
+        mensaje.style.display = "block";
+        mensaje.style.color = error ? "#b00020" : "#173b67";
     }
 
+    // Recuperar el producto seleccionado.
+    const idProducto = Number(localStorage.getItem("id_producto")) || 0;
+    const producto = localStorage.getItem("producto") || "";
+    const talla = localStorage.getItem("talla") || "";
+    const cantidad = Number(localStorage.getItem("cantidad")) || 1;
+    const precio = Number(localStorage.getItem("precio")) || 0;
 
-    // ======================================
-    // GUARDAR INFORMACIÓN
-    // ======================================
+    // Mostrar el resumen de la compra.
+    obtener("nombreProducto").textContent =
+        producto || "Producto seleccionado";
 
-    localStorage.setItem("nombreCliente", nombre);
+    obtener("tallaProducto").textContent = talla || "-";
+    obtener("cantidadProducto").textContent = String(cantidad);
 
-    localStorage.setItem("correoCliente", correo);
+    obtener("precioProducto").textContent =
+        "$" + precio.toLocaleString("es-CO");
 
-    localStorage.setItem("telefonoCliente", telefonoValor);
+    obtener("totalPago").textContent =
+        "$" + (precio * cantidad).toLocaleString("es-CO");
 
-    localStorage.setItem("metodoPago", metodoPago);
+    // Mostrar u ocultar los campos de tarjeta.
+    function actualizarMetodo() {
+        datosTarjeta.style.display =
+            metodo.value === "tarjeta" ? "block" : "none";
+    }
 
-    localStorage.setItem("totalPago", total);
+    metodo.addEventListener("change", actualizarMetodo);
+    actualizarMetodo();
 
+    // Teléfono: máximo 10 dígitos.
+    telefono.addEventListener("input", () => {
+        telefono.value = telefono.value.replace(/\D/g, "").slice(0, 10);
+    });
 
-    // ======================================
-    // MENSAJE DE CONFIRMACIÓN
-    // ======================================
+    // Tarjeta: máximo 16 dígitos.
+    tarjeta.addEventListener("input", () => {
+        const digitos = tarjeta.value.replace(/\D/g, "").slice(0, 16);
 
-    alert(
-        "¡Pago registrado correctamente!\n\n" +
+        tarjeta.value = digitos.replace(/(\d{4})(?=\d)/g, "$1 ");
+    });
 
-        "Producto: " + producto + "\n" +
+    // CVV: máximo 3 dígitos.
+    cvv.addEventListener("input", () => {
+        cvv.value = cvv.value.replace(/\D/g, "").slice(0, 3);
+    });
 
-        "Talla: " + talla + "\n" +
+    // Vencimiento: formato MM/AA.
+    vencimiento.addEventListener("input", () => {
+        const digitos = vencimiento.value.replace(/\D/g, "").slice(0, 4);
 
-        "Cantidad: " + cantidad + "\n" +
+        vencimiento.value = digitos.length > 2
+            ? digitos.slice(0, 2) + "/" + digitos.slice(2)
+            : digitos;
+    });
 
-        "Total: $" + total.toLocaleString("es-CO")
-    );
+    // Procesar el formulario.
+    formulario.addEventListener("submit", async evento => {
+        evento.preventDefault();
+        mensaje.style.display = "none";
 
+        if (!formulario.reportValidity()) {
+            return;
+        }
 
-    // ======================================
-    // REGRESAR AL CATÁLOGO
-    // ======================================
+        if (!idProducto || !talla || cantidad < 1) {
+            mostrarMensaje(
+                "No se encontró el producto seleccionado. Regresa al catálogo y vuelve a seleccionarlo.",
+                true
+            );
+            return;
+        }
 
-    window.location.href = "catalogo.html";
+        const nombre = obtener("nombre").value.trim();
+        const correo = obtener("correo").value.trim();
+        const telefonoValor = telefono.value.trim();
+        const metodoPago = metodo.value;
 
+        if (!/^[0-9]{10}$/.test(telefonoValor)) {
+            mostrarMensaje(
+                "El teléfono debe tener exactamente 10 dígitos.",
+                true
+            );
+            return;
+        }
+
+        // Validaciones de tarjeta.
+        if (metodoPago === "tarjeta") {
+            const numero = tarjeta.value.replace(/\D/g, "");
+            const codigo = cvv.value.replace(/\D/g, "");
+            const fecha = vencimiento.value.trim();
+
+            if (numero.length !== 16) {
+                mostrarMensaje(
+                    "El número de tarjeta debe tener 16 dígitos.",
+                    true
+                );
+                return;
+            }
+
+            if (codigo.length !== 3) {
+                mostrarMensaje(
+                    "El CVV debe tener 3 dígitos.",
+                    true
+                );
+                return;
+            }
+
+            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(fecha)) {
+                mostrarMensaje(
+                    "El vencimiento debe tener el formato MM/AA.",
+                    true
+                );
+                return;
+            }
+
+            const partes = fecha.split("/");
+            const mes = Number(partes[0]);
+            const anio = 2000 + Number(partes[1]);
+
+            const finVigencia = new Date(
+                anio,
+                mes,
+                0,
+                23,
+                59,
+                59
+            );
+
+            if (finVigencia < new Date()) {
+                mostrarMensaje(
+                    "La tarjeta está vencida. Verifica la fecha de vencimiento.",
+                    true
+                );
+                return;
+            }
+        }
+
+        // Enviar al PHP los datos necesarios para registrar el pedido.
+        // Nunca se envían ni se guardan el número de tarjeta o el CVV.
+        const datos = new URLSearchParams({
+            id_producto: String(idProducto),
+            cantidad: String(cantidad),
+            talla: talla,
+            nombre: nombre,
+            correo: correo,
+            telefono: telefonoValor,
+            metodo: metodoPago
+        });
+
+        const textoOriginal = boton.textContent;
+
+        boton.disabled = true;
+        boton.textContent = "Registrando pedido...";
+
+        try {
+            const respuesta = await fetch("procesar_pago.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8"
+                },
+                body: datos.toString()
+            });
+
+            const texto = await respuesta.text();
+            let resultado;
+
+            try {
+                resultado = JSON.parse(texto);
+            } catch {
+                throw new Error(
+                    "El servidor no devolvió una respuesta válida. Revisa procesar_pago.php."
+                );
+            }
+
+            if (respuesta.status === 401) {
+                alert("Tu sesión expiró. Inicia sesión nuevamente.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            if (!respuesta.ok || !resultado.success) {
+                throw new Error(
+                    resultado.mensaje || "No se pudo registrar el pedido."
+                );
+            }
+
+            // Guardar la referencia del último pedido.
+            localStorage.setItem(
+                "ultimoPedido",
+                String(resultado.id_pedido)
+            );
+
+            alert(
+                "Pedido registrado correctamente.\n\n" +
+                "Número de pedido: " + resultado.id_pedido + "\n" +
+                "Producto: " + producto + "\n" +
+                "Talla: " + talla + "\n" +
+                "Cantidad: " + cantidad + "\n" +
+                "Total: $" +
+                Number(resultado.total).toLocaleString("es-CO") +
+                "\n\nEstado del pago: " + resultado.estado
+            );
+
+            // CAMBIO: ir al historial de pedidos.
+            window.location.href = "mis_pedidos.php";
+
+        } catch (error) {
+            mostrarMensaje(
+                error.message || "Ocurrió un error al registrar el pedido.",
+                true
+            );
+
+            alert(
+                error.message || "Ocurrió un error al registrar el pedido."
+            );
+
+            boton.disabled = false;
+            boton.textContent = textoOriginal;
+        }
+    });
 });

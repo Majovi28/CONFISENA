@@ -1,459 +1,241 @@
-// ==========================================
-// INFORMACIÓN DEL PRODUCTO
-// ==========================================
 
-const producto =
-    localStorage.getItem("producto") ||
-    "Camisa de uniforme SENA";
-
-const talla =
-    localStorage.getItem("talla") ||
-    "M";
-
-const cantidad =
-    parseInt(localStorage.getItem("cantidad")) || 1;
-
-const precio =
-    parseInt(localStorage.getItem("precio")) || 60000;
-
-
-
-// ==========================================
-// MOSTRAR INFORMACIÓN
-// ==========================================
-
-document.getElementById("nombreProducto").textContent =
-    producto;
-
-document.getElementById("tallaProducto").textContent =
-    talla;
-
-document.getElementById("cantidadProducto").textContent =
-    cantidad;
-
-document.getElementById("precioProducto").textContent =
-    "$" + precio.toLocaleString("es-CO");
-
-
-
-// ==========================================
-// CALCULAR VALORES
-// ==========================================
-
-// Valor total
-
-const total = precio * cantidad;
-
-
-// Abono del 50%
-
-const abono = total * 0.50;
-
-
-// Saldo pendiente
-
-const saldo = total - abono;
-
-
-
-// ==========================================
-// MOSTRAR VALORES
-// ==========================================
-
-document.getElementById("totalApartado").textContent =
-    "$" + total.toLocaleString("es-CO");
-
-document.getElementById("abonoApartado").textContent =
-    "$" + abono.toLocaleString("es-CO");
-
-document.getElementById("saldoApartado").textContent =
-    "$" + saldo.toLocaleString("es-CO");
-
-
-
-// ==========================================
-// FECHA MÍNIMA
-// ==========================================
-
-const fechaEntrega =
-    document.getElementById("fechaEntrega");
-
-const hoy = new Date();
-
-const año = hoy.getFullYear();
-
-const mes =
-    String(hoy.getMonth() + 1).padStart(2, "0");
-
-const dia =
-    String(hoy.getDate()).padStart(2, "0");
-
-const fechaActual =
-    `${año}-${mes}-${dia}`;
-
-fechaEntrega.min = fechaActual;
-
-
-
-// ==========================================
-// MÉTODO DE PAGO
-// ==========================================
-
-const metodoAbono =
-    document.getElementById("metodoAbono");
-
-const datosTarjeta =
-    document.getElementById("datosTarjeta");
-
-
-metodoAbono.addEventListener("change", function () {
-
-    if (this.value === "tarjeta") {
-
-        datosTarjeta.style.display = "block";
-
-    } else {
-
-        datosTarjeta.style.display = "none";
-
-    }
-
-});
-
-
-
-// ==========================================
-// TELÉFONO - MÁXIMO 10 DÍGITOS
-// ==========================================
-
-const telefono =
-    document.getElementById("telefono");
-
-
-telefono.addEventListener("input", function () {
-
-    this.value = this.value
-        .replace(/\D/g, "")
-        .substring(0, 10);
-
-});
-
-
-
-// ==========================================
-// TARJETA - MÁXIMO 16 DÍGITOS
-// ==========================================
-
-const numeroTarjeta =
-    document.getElementById("numeroTarjeta");
-
-
-numeroTarjeta.addEventListener("input", function () {
-
-    let valor =
-        this.value.replace(/\D/g, "");
-
-
-    // Máximo 16 números
-
-    valor =
-        valor.substring(0, 16);
-
-
-    // Separar cada 4 números
-
-    valor =
-        valor.replace(/(.{4})/g, "$1 ").trim();
-
-
-    this.value = valor;
-
-});
-
-
-
-// ==========================================
-// CVV - MÁXIMO 3 DÍGITOS
-// ==========================================
-
-const cvv =
-    document.getElementById("cvv");
-
-
-cvv.addEventListener("input", function () {
-
-    this.value = this.value
-        .replace(/\D/g, "")
-        .substring(0, 3);
-
-});
-
-
-
-// ==========================================
-// VENCIMIENTO MM/AA
-// ==========================================
-
-const vencimiento =
-    document.getElementById("vencimiento");
-
-
-vencimiento.addEventListener("input", function () {
-
-    let valor =
-        this.value.replace(/\D/g, "");
-
-
-    // Máximo 4 números
-
-    valor =
-        valor.substring(0, 4);
-
-
-    // Agregar /
-
-    if (valor.length > 2) {
-
-        valor =
-            valor.substring(0, 2) +
-            "/" +
-            valor.substring(2);
-
-    }
-
-
-    this.value = valor;
-
-});
-
-
-
-// ==========================================
-// FORMULARIO
-// ==========================================
-
-const formulario =
-    document.getElementById("formularioApartado");
-
-
-formulario.addEventListener("submit", function (evento) {
-
-    evento.preventDefault();
-
-
-
-    // ======================================
-    // DATOS DEL USUARIO
-    // ======================================
-
-    const nombre =
-        document.getElementById("nombre")
-        .value.trim();
-
-    const correo =
-        document.getElementById("correo")
-        .value.trim();
-
-    const telefonoValor =
-        document.getElementById("telefono")
-        .value.trim();
-
-    const tienda =
-        document.getElementById("tienda")
-        .value;
-
-    const fecha =
-        document.getElementById("fechaEntrega")
-        .value;
-
-    const metodo =
-        document.getElementById("metodoAbono")
-        .value;
-
-
-
-    // ======================================
-    // VALIDAR TELÉFONO
-    // ======================================
-
-    if (telefonoValor.length !== 10) {
-
-        alert(
-            "El número de teléfono debe tener exactamente 10 dígitos."
-        );
-
+document.addEventListener("DOMContentLoaded", () => {
+    const obtener = id => document.getElementById(id);
+
+    const formulario = obtener("formularioApartado");
+    const metodo = obtener("metodoAbono");
+    const datosTarjeta = obtener("datosTarjeta");
+    const telefono = obtener("telefono");
+    const tarjeta = obtener("numeroTarjeta");
+    const cvv = obtener("cvv");
+    const vencimiento = obtener("vencimiento");
+    const fechaEntrega = obtener("fechaEntrega");
+
+    if (!formulario || !metodo || !datosTarjeta) {
+        alert("No se encontró el formulario. Revisa apartado.php.");
         return;
-
     }
 
+    // Recuperar el producto seleccionado.
+    const idProducto = Number(localStorage.getItem("id_producto")) || 0;
+    const producto = localStorage.getItem("producto") || "";
+    const talla = localStorage.getItem("talla") || "";
+    const cantidad = Number(localStorage.getItem("cantidad")) || 1;
+    const precio = Number(localStorage.getItem("precio")) || 0;
 
+    // Mostrar el resumen del apartado.
+    obtener("nombreProducto").textContent =
+        producto || "Producto seleccionado";
 
-    // ======================================
-    // VALIDAR MÉTODO
-    // ======================================
+    obtener("tallaProducto").textContent = talla || "-";
+    obtener("cantidadProducto").textContent = String(cantidad);
 
-    if (metodo === "") {
+    obtener("precioProducto").textContent =
+        "$" + precio.toLocaleString("es-CO");
 
-        alert(
-            "Por favor selecciona un método de pago para el abono."
-        );
+    const total = precio * cantidad;
+    const abono = total * 0.5;
+    const saldo = total - abono;
 
-        return;
+    obtener("totalApartado").textContent =
+        "$" + total.toLocaleString("es-CO");
 
+    obtener("abonoApartado").textContent =
+        "$" + abono.toLocaleString("es-CO");
+
+    obtener("saldoApartado").textContent =
+        "$" + saldo.toLocaleString("es-CO");
+
+    // Definir la fecha mínima de entrega.
+    const hoy = new Date();
+
+    const fechaMinima =
+        hoy.getFullYear() + "-" +
+        String(hoy.getMonth() + 1).padStart(2, "0") + "-" +
+        String(hoy.getDate()).padStart(2, "0");
+
+    fechaEntrega.min = fechaMinima;
+
+    // Mostrar u ocultar los campos de tarjeta.
+    function actualizarMetodo() {
+        datosTarjeta.style.display =
+            metodo.value === "tarjeta" ? "block" : "none";
     }
 
+    metodo.addEventListener("change", actualizarMetodo);
+    actualizarMetodo();
 
+    // Teléfono: máximo 10 dígitos.
+    telefono.addEventListener("input", () => {
+        telefono.value = telefono.value.replace(/\D/g, "").slice(0, 10);
+    });
 
-    // ======================================
-    // VALIDAR TARJETA
-    // ======================================
+    // Tarjeta: máximo 16 dígitos.
+    tarjeta.addEventListener("input", () => {
+        const digitos = tarjeta.value.replace(/\D/g, "").slice(0, 16);
 
-    if (metodo === "tarjeta") {
+        tarjeta.value = digitos.replace(/(\d{4})(?=\d)/g, "$1 ");
+    });
 
+    // CVV: máximo 3 dígitos.
+    cvv.addEventListener("input", () => {
+        cvv.value = cvv.value.replace(/\D/g, "").slice(0, 3);
+    });
 
-        const tarjeta =
-            numeroTarjeta.value.replace(/\D/g, "");
+    // Vencimiento: formato MM/AA.
+    vencimiento.addEventListener("input", () => {
+        const digitos = vencimiento.value.replace(/\D/g, "").slice(0, 4);
 
+        vencimiento.value = digitos.length > 2
+            ? digitos.slice(0, 2) + "/" + digitos.slice(2)
+            : digitos;
+    });
 
-        const cvvValor =
-            cvv.value.replace(/\D/g, "");
+    const boton = formulario.querySelector('button[type="submit"]');
 
+    // Enviar el apartado al servidor.
+    formulario.addEventListener("submit", async evento => {
+        evento.preventDefault();
 
-        const vencimientoValor =
-            vencimiento.value;
-
-
-
-        if (tarjeta.length !== 16) {
-
-            alert(
-                "El número de tarjeta debe tener exactamente 16 dígitos."
-            );
-
+        if (!formulario.reportValidity()) {
             return;
-
         }
 
-
-
-        if (cvvValor.length !== 3) {
-
+        if (!idProducto || !talla || cantidad < 1) {
             alert(
-                "El CVV debe tener exactamente 3 dígitos."
+                "No se encontró el producto seleccionado. " +
+                "Regresa al catálogo y vuelve a seleccionarlo."
             );
-
             return;
-
         }
 
-
-
-        if (vencimientoValor.length !== 5) {
-
-            alert(
-                "El vencimiento debe tener el formato MM/AA."
-            );
-
+        if (!/^[0-9]{10}$/.test(telefono.value.trim())) {
+            alert("El teléfono debe tener exactamente 10 dígitos.");
             return;
-
         }
 
-    }
+        const metodoSeleccionado = metodo.value;
 
+        // Validar tarjeta únicamente cuando sea el método seleccionado.
+        if (metodoSeleccionado === "tarjeta") {
+            const numero = tarjeta.value.replace(/\D/g, "");
+            const codigo = cvv.value.replace(/\D/g, "");
+            const fecha = vencimiento.value.trim();
 
+            if (numero.length !== 16) {
+                alert("El número de tarjeta debe tener 16 dígitos.");
+                return;
+            }
 
-    // ======================================
-    // GUARDAR INFORMACIÓN
-    // ======================================
+            if (codigo.length !== 3) {
+                alert("El CVV debe tener 3 dígitos.");
+                return;
+            }
 
-    localStorage.setItem(
-        "nombreCliente",
-        nombre
-    );
+            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(fecha)) {
+                alert("La fecha debe tener el formato MM/AA.");
+                return;
+            }
 
-    localStorage.setItem(
-        "correoCliente",
-        correo
-    );
+            const partes = fecha.split("/");
+            const mes = Number(partes[0]);
+            const anio = 2000 + Number(partes[1]);
 
-    localStorage.setItem(
-        "telefonoCliente",
-        telefonoValor
-    );
+            const finVigencia = new Date(
+                anio,
+                mes,
+                0,
+                23,
+                59,
+                59
+            );
 
-    localStorage.setItem(
-        "tiendaApartado",
-        tienda
-    );
+            if (finVigencia < new Date()) {
+                alert("La tarjeta está vencida.");
+                return;
+            }
+        }
 
-    localStorage.setItem(
-        "fechaEntrega",
-        fecha
-    );
+        // El servidor obtiene el precio real desde MySQL.
+        const datos = new URLSearchParams({
+            id_producto: String(idProducto),
+            cantidad: String(cantidad),
+            talla: talla,
+            fecha_entrega: fechaEntrega.value,
+            tienda: obtener("tienda").value,
+            metodo: metodoSeleccionado
+        });
 
-    localStorage.setItem(
-        "metodoAbono",
-        metodo
-    );
+        const textoOriginal = boton.textContent;
 
-    localStorage.setItem(
-        "totalApartado",
-        total
-    );
+        boton.disabled = true;
+        boton.textContent = "Registrando apartado...";
 
-    localStorage.setItem(
-        "abonoApartado",
-        abono
-    );
+        try {
+            const respuesta = await fetch("procesar_apartado.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded;charset=UTF-8"
+                },
+                body: datos.toString()
+            });
 
-    localStorage.setItem(
-        "saldoApartado",
-        saldo
-    );
+            const texto = await respuesta.text();
+            let resultado;
 
-    localStorage.setItem(
-        "estadoApartado",
-        "Pendiente"
-    );
+            try {
+                resultado = JSON.parse(texto);
+            } catch {
+                throw new Error(
+                    "El servidor no devolvió una respuesta válida. " +
+                    "Revisa procesar_apartado.php."
+                );
+            }
 
+            if (respuesta.status === 401) {
+                alert("Tu sesión expiró. Inicia sesión nuevamente.");
+                window.location.href = "login.html";
+                return;
+            }
 
+            if (!respuesta.ok || !resultado.success) {
+                throw new Error(
+                    resultado.mensaje || "No se pudo registrar el apartado."
+                );
+            }
 
-    // ======================================
-    // CONFIRMACIÓN
-    // ======================================
+            // Guardar la referencia del apartado.
+            localStorage.setItem(
+                "ultimoApartado",
+                String(resultado.id_apartado)
+            );
 
-    alert(
+            alert(
+                "Apartado registrado correctamente.\n\n" +
+                "Número de apartado: " + resultado.id_apartado + "\n" +
+                "Producto: " + producto + "\n" +
+                "Talla: " + talla + "\n" +
+                "Cantidad: " + cantidad + "\n" +
+                "Total: $" +
+                Number(resultado.total).toLocaleString("es-CO") + "\n" +
+                "Abono requerido: $" +
+                Number(resultado.abono).toLocaleString("es-CO") + "\n" +
+                "Saldo pendiente: $" +
+                Number(resultado.saldo).toLocaleString("es-CO") +
+                "\n\nEstado: " + resultado.estado
+            );
 
-        "¡Apartado realizado correctamente!\n\n" +
+            // CAMBIO: ir al historial de apartados.
+            window.location.href = "mis_apartados.php";
 
-        "Producto: " + producto + "\n" +
+        } catch (error) {
+            alert(
+                error.message || "Ocurrió un error al registrar el apartado."
+            );
 
-        "Talla: " + talla + "\n" +
-
-        "Cantidad: " + cantidad + "\n" +
-
-        "Tienda: " + tienda + "\n" +
-
-        "Fecha de entrega: " + fecha + "\n\n" +
-
-        "Total: $" +
-        total.toLocaleString("es-CO") + "\n" +
-
-        "Abono (50%): $" +
-        abono.toLocaleString("es-CO") + "\n" +
-
-        "Saldo pendiente: $" +
-        saldo.toLocaleString("es-CO")
-
-    );
-
-
-
-    // ======================================
-    // REGRESAR AL CATÁLOGO
-    // ======================================
-
-    window.location.href =
-        "catalogo.html";
-
+            boton.disabled = false;
+            boton.textContent = textoOriginal;
+        }
+    });
 });
